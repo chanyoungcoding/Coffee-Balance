@@ -9,9 +9,14 @@ import CoffeeInfoBox from '../components/CoffeeInfoBox'
 const Detail = ({ route, navigation: {goBack} }) => {
 
   const COFFEE_NAME = route.params.coffeeName
-  const coffeeInformation = CoffeeInfo.filter(item => item.name === COFFEE_NAME)
-  const coffeeImage = CoffeeInformation.filter(item => item.name === COFFEE_NAME);
+  const coffeeInformation = CoffeeInfo.filter(item => item.name.toLowerCase() === COFFEE_NAME.toLowerCase());
+  const coffeeImage = CoffeeInformation.filter(item => item.name.toLowerCase() === COFFEE_NAME.toLowerCase());
 
+  if (coffeeInformation.length === 0 || coffeeImage.length === 0) return (
+    <View>
+      <Text>정보가 없습니다.</Text>
+    </View>
+  );
   return (
     <View>
       <GoBackButton onPress={() => goBack()}>
