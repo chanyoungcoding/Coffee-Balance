@@ -10,7 +10,7 @@ const IsLogin = () => (
   <Nav.Navigator
     screenOptions={{
       presentation: "modal",
-      headerTintColor: "white",
+      headerShown: false,
     }}
   >
     <Nav.Screen name="Login" component={Login} />
