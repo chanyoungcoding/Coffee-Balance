@@ -31,7 +31,7 @@ const Home = ({navigation: {navigate}}) => {
 
       </Container>
       <AddCoffeeButton onPress={() => navigate("Stack", {screen: "AddCoffeeCup"})}>
-       <MaterialCommunityIcons name="coffee" size={20} color="black" />
+        <MaterialCommunityIcons name="coffee" size={20} color="black" />
       </AddCoffeeButton>
 
     </BackgroundContainer>
