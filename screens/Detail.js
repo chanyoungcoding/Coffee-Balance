@@ -3,7 +3,6 @@ import { Text, View } from 'react-native'
 import styled from 'styled-components/native'
 import { CoffeeInfo } from '../Api/CoffeeInfo'
 import { CoffeeInformation } from '../Api/CoffeeName'
-import { DarkCoffeeColor } from '../colors'
 import CoffeeInfoBox from '../components/CoffeeInfoBox'
 
 const Detail = ({ route, navigation: {goBack} }) => {
