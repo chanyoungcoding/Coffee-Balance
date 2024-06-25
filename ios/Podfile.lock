@@ -953,6 +953,9 @@ PODS:
   - BoringSSL-GRPC/Implementation (0.0.32):
     - BoringSSL-GRPC/Interface (= 0.0.32)
   - BoringSSL-GRPC/Interface (0.0.32)
+  - DGCharts (5.0.0):
+    - DGCharts/Core (= 5.0.0)
+  - DGCharts/Core (5.0.0)
   - DoubleConversion (1.1.6)
   - EXConstants (16.0.2):
     - ExpoModulesCore
@@ -2109,6 +2112,10 @@ PODS:
   - React-Mapbuffer (0.74.2):
     - glog
     - React-debug
+  - react-native-charts-wrapper (0.6.0):
+    - DGCharts (= 5.0.0)
+    - React
+    - SwiftyJSON (= 5.0)
   - react-native-document-picker (9.3.0):
     - React-Core
   - react-native-image-picker (7.1.2):
@@ -2402,7 +2409,10 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
+  - RNSVG (15.3.0):
+    - React-Core
   - SocketRocket (0.7.0)
+  - SwiftyJSON (5.0.0)
   - Yoga (0.0.0)
 
 DEPENDENCIES:
@@ -2446,6 +2456,7 @@ DEPENDENCIES:
   - React-jsitracing (from `../node_modules/react-native/ReactCommon/hermes/executor/`)
   - React-logger (from `../node_modules/react-native/ReactCommon/logger`)
   - React-Mapbuffer (from `../node_modules/react-native/ReactCommon`)
+  - react-native-charts-wrapper (from `../node_modules/react-native-charts-wrapper`)
   - react-native-document-picker (from `../node_modules/react-native-document-picker`)
   - react-native-image-picker (from `../node_modules/react-native-image-picker`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
@@ -2477,12 +2488,14 @@ DEPENDENCIES:
   - "RNFBFirestore (from `../node_modules/@react-native-firebase/firestore`)"
   - "RNFBStorage (from `../node_modules/@react-native-firebase/storage`)"
   - RNScreens (from `../node_modules/react-native-screens`)
+  - RNSVG (from `../node_modules/react-native-svg`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
   trunk:
     - abseil
     - BoringSSL-GRPC
+    - DGCharts
     - Firebase
     - FirebaseAppCheckInterop
     - FirebaseAuth
@@ -2503,6 +2516,7 @@ SPEC REPOS:
     - PromisesObjC
     - RecaptchaInterop
     - SocketRocket
+    - SwiftyJSON
 
 EXTERNAL SOURCES:
   boost:
@@ -2582,6 +2596,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/logger"
   React-Mapbuffer:
     :path: "../node_modules/react-native/ReactCommon"
+  react-native-charts-wrapper:
+    :path: "../node_modules/react-native-charts-wrapper"
   react-native-document-picker:
     :path: "../node_modules/react-native-document-picker"
   react-native-image-picker:
@@ -2644,6 +2660,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-firebase/storage"
   RNScreens:
     :path: "../node_modules/react-native-screens"
+  RNSVG:
+    :path: "../node_modules/react-native-svg"
   Yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
@@ -2651,6 +2669,7 @@ SPEC CHECKSUMS:
   abseil: d121da9ef7e2ff4cab7666e76c5a3e0915ae08c3
   boost: d3f49c53809116a5d38da093a8aa78bf551aed09
   BoringSSL-GRPC: 1e2348957acdbcad360b80a264a90799984b2ba6
+  DGCharts: 6e0cf2644e8f81ad13f04caa8bc18502870a1c54
   DoubleConversion: 76ab83afb40bddeeee456813d9c04f67f78771b5
   EXConstants: 409690fbfd5afea964e5e9d6c4eb2c2b59222c59
   Expo: 9c87c876b45a6934894ba5e9353ee94fdba48125
@@ -2706,6 +2725,7 @@ SPEC CHECKSUMS:
   React-jsitracing: 34bc0fbc606f69e66f05286d94d5cd6cbf2ef562
   React-logger: 29fa3e048f5f67fe396bc08af7606426d9bd7b5d
   React-Mapbuffer: 86703e9e4f6522053568300827b436ccc01e1101
+  react-native-charts-wrapper: cd83d9b1acb8e06ebd18bf297de597906e1cc87d
   react-native-document-picker: 5b97e24a7f1a1e4a50a72c540a043f32d29a70a2
   react-native-image-picker: 8b791a2bec6da84ca7d8cbcad30da159d6dd6da4
   react-native-safe-area-context: dcab599c527c2d7de2d76507a523d20a0b83823d
@@ -2738,7 +2758,9 @@ SPEC CHECKSUMS:
   RNFBFirestore: a60f00920799fa7bb71a1ecb682e4e6918f6f2b0
   RNFBStorage: d4935d5db062e552edb623d77e7c460dc45d35d1
   RNScreens: 30249f9331c3b00ae7cb7922e11f58b3ed369c07
+  RNSVG: a48668fd382115bc89761ce291a81c4ca5f2fd2e
   SocketRocket: abac6f5de4d4d62d24e11868d7a2f427e0ef940d
+  SwiftyJSON: 36413e04c44ee145039d332b4f4e2d3e8d6c4db7
   Yoga: 9ad2c02dbd9811bb5a35fe23081cb0f5d5a3f9dd
 
 PODFILE CHECKSUM: 2aa98794187e8a61deeda5d0da6e4de545e23235

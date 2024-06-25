@@ -5,7 +5,7 @@ import storage from '@react-native-firebase/storage';
 import { launchImageLibrary } from 'react-native-image-picker';
 import styled from 'styled-components/native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { BasicColor, NomalColor } from '../colors';
+import { BasicColor, ChocolateColor, NomalColor } from '../colors';
 
 import BackgroundUrl from "../assets/coffee/coffeeBackground.png";
 
@@ -168,7 +168,7 @@ const UserImg = styled.Image`
 
 const SelectImageButton = styled.TouchableOpacity`
   margin-top: 20px;
-  background-color: white;
+  background-color: ${ChocolateColor};
   border-radius: 100px;
   padding: 5px;
   position: absolute;
@@ -234,8 +234,6 @@ const ImageSelectBox = styled.View`
   border-radius: 10px;
   background-color: rgba(255, 255, 255, 0.6);
 `
-
-
 
 const styles = StyleSheet.create({
   textInput: {

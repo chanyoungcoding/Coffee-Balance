@@ -1,84 +1,56 @@
-// App.js
-import React, { useState } from 'react';
-import { View, Button, Text, Image, StyleSheet, ActivityIndicator } from 'react-native';
-import { launchImageLibrary } from 'react-native-image-picker';
-import storage from '@react-native-firebase/storage';
-import auth from '@react-native-firebase/auth';
+import React from 'react';
+import { View, StyleSheet, Text, Dimensions } from 'react-native';
+import { LineChart } from "react-native-chart-kit";
 
 const Test = () => {
-  const [imageUri, setImageUri] = useState(null);
-  const [uploading, setUploading] = useState(false);
-  const [uploadedUri, setUploadedUri] = useState('');
-
-  const selectImageFromGallery = async () => {
-    const options = {
-      mediaType: 'photo',
-      includeBase64: false,
-    };
-
-    launchImageLibrary(options, (response) => {
-      if (response.didCancel) {
-        console.log('Image selection cancelled');
-      } else if (response.errorMessage) {
-        console.error('ImagePicker Error: ', response.errorMessage);
-      } else if (response.assets) {
-        const asset = response.assets[0];
-        setImageUri(asset.uri);
-      }
-    }).catch(error => {
-      console.error('Failed to open image picker: ', error);
-    });
-  };
-
-  const uploadImageToFirebase = async () => {
-    if (!imageUri) {
-      console.log('No image selected');
-      return;
-    }
-
-    const currentUser = auth().currentUser;
-    if (!currentUser) {
-      console.log('No user is logged in');
-      return;
-    }
-
-    const uid = currentUser.uid;
-    const fileName = `avatar/${uid}`;
-    const storageRef = storage().ref(fileName);
-
-    setUploading(true);
-
-    try {
-      const uploadTask = storageRef.putFile(imageUri);
-      await uploadTask;
-
-      const downloadUrl = await storageRef.getDownloadURL();
-      setUploadedUri(downloadUrl);
-      console.log('Image uploaded successfully: ', downloadUrl);
-    } catch (error) {
-      console.error('Image upload failed: ', error);
-    } finally {
-      setUploading(false);
-    }
-  };
 
   return (
-    <View style={styles.container}>
-      <Button title="Select Image from Gallery" onPress={selectImageFromGallery} />
-      {imageUri && (
-        <View style={styles.imageContainer}>
-          <Image source={{ uri: imageUri }} style={styles.image} />
-        </View>
-      )}
-      <Button title="Upload Image to Firebase" onPress={uploadImageToFirebase} disabled={!imageUri || uploading} />
-      {uploading && <ActivityIndicator size="large" color="#0000ff" />}
-      {uploadedUri && (
-        <View style={styles.uploadedInfo}>
-          <Text>Image uploaded to:</Text>
-          <Text style={styles.link}>{uploadedUri}</Text>
-        </View>
-      )}
-    </View>
+    <View>
+  <Text>Bezier Line Chart</Text>
+  <LineChart
+    data={{
+      labels: ["January", "February", "March", "April", "May", "June"],
+      datasets: [
+        {
+          data: [
+            Math.random() * 100,
+            Math.random() * 100,
+            Math.random() * 100,
+            Math.random() * 100,
+            Math.random() * 100,
+            Math.random() * 100
+          ]
+        }
+      ]
+    }}
+    width={Dimensions.get("window").width} // from react-native
+    height={220}
+    yAxisLabel="$"
+    yAxisSuffix="k"
+    yAxisInterval={1} // optional, defaults to 1
+    chartConfig={{
+      backgroundColor: "#e26a00",
+      backgroundGradientFrom: "#fb8c00",
+      backgroundGradientTo: "#ffa726",
+      decimalPlaces: 2, // optional, defaults to 2dp
+      color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+      labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+      style: {
+        borderRadius: 16
+      },
+      propsForDots: {
+        r: "6",
+        strokeWidth: "2",
+        stroke: "#ffa726"
+      }
+    }}
+    bezier
+    style={{
+      marginVertical: 8,
+      borderRadius: 16
+    }}
+  />
+</View>
   );
 };
 
@@ -87,23 +59,11 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: '#F5FCFF',
   },
-  imageContainer: {
-    marginVertical: 20,
-    width: 200,
-    height: 200,
-  },
-  image: {
-    width: '100%',
-    height: '100%',
-    resizeMode: 'cover',
-  },
-  uploadedInfo: {
-    marginTop: 20,
-    alignItems: 'center',
-  },
-  link: {
-    color: 'blue',
+  chart: {
+    width: '80%',
+    height: 300,
   },
 });
 
