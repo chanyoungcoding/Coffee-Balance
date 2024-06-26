@@ -20,7 +20,7 @@ const Home = ({navigation: {navigate}}) => {
       <Container style={{flex: 1 }}>
 
         <PieContainer>
-          <PieText>오늘 카페 섭취량</PieText>
+          <PieText>오늘 커피 섭취량</PieText>
           <ProgressChartBox/>
         </PieContainer>
 
