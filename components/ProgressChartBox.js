@@ -4,6 +4,8 @@ import { ProgressChart } from 'react-native-chart-kit';
 import firestore from '@react-native-firebase/firestore';
 import auth from "@react-native-firebase/auth";
 import styled from 'styled-components/native';
+import { useRecoilState } from 'recoil';
+import { AllCoffeeData, YesterDayCoffeeCaffeine, dataCoffee } from "../Data";
 
 import { BasicColor, NomalColor } from '../colors';
 import { CoffeeInfo } from '../Api/CoffeeInfo';
@@ -11,13 +13,23 @@ import { CoffeeInfo } from '../Api/CoffeeInfo';
 const screenWidth = Dimensions.get('window').width;
 
 const ProgressChartBox = () => {
-  const [coffeeData, setCoffeeData] = useState({
-    coffeeCount: 0,
-    caffeine: 0,
-    calory: 0,
-  });
+
+  const [coffeeData, setCoffeeData] = useRecoilState(dataCoffee)
+  const [coffeeAllData, setCoffeeAllData] = useRecoilState(AllCoffeeData)
+  const [CaffeineData, setCaffeineData] = useRecoilState(YesterDayCoffeeCaffeine)
 
   const [modalVisible, setModalVisible] = useState(false);
+
+    // 어제 날짜 
+    const yesterDayBring = () => {
+      const today = new Date();
+  
+      const yesterday = new Date(today);
+      yesterday.setDate(today.getDate() - 1);
+  
+      const formattedYesterday = yesterday.toISOString().split('T')[0];
+      return formattedYesterday
+    }
 
   useEffect(() => {
     const currentUser = auth().currentUser;
@@ -34,15 +46,18 @@ const ProgressChartBox = () => {
         if (userDoc.exists) {
           const userData = userDoc.data();
 
+          setCoffeeAllData(userData.days)
           // days 데이터 가져오기
           const { days } = userData;
+          const yesterday = yesterDayBring();
 
           // 오늘 날짜의 데이터를 가져오기 (날짜 형식에 맞게 수정 필요)
           const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD 형식
           const todayData = days?.find(day => day.day === today);
+          const yesterData = days?.find(day => day.day === yesterday);
 
           if (todayData) {
-            // CoffeeInfo를 사용하여 데이터를 가공
+
             let totalCoffeeCount = 0;
             let totalCaffeine = 0;
             let totalCalory = 0;
@@ -72,6 +87,26 @@ const ProgressChartBox = () => {
             if (coffeeCountExceeds || caffeineExceeds) {
               setModalVisible(true);
             }
+          }
+
+          // 어제 카페인 데이터
+          if(yesterData) {
+            let yesterdayCaffeine = 0;
+
+            yesterData.coffeeName.forEach(name => {
+              const coffeeInfo = CoffeeInfo.find(coffee => coffee.name === name);
+
+              if(coffeeInfo) {
+                yesterdayCaffeine += coffeeInfo.caffeine;
+              }
+            })
+
+            setCaffeineData({
+              caffeine: yesterdayCaffeine
+            })
+
+
+
           }
         }
       }, (error) => {

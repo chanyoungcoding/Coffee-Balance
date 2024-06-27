@@ -4,6 +4,7 @@ import * as Font from "expo-font";
 import {Ionicons} from "@expo/vector-icons";
 import { NavigationContainer } from '@react-navigation/native';
 import auth from "@react-native-firebase/auth";
+import { RecoilRoot } from "recoil";
 
 import Root from './navigation/Root';
 import IsLogin from './navigation/IsLogin';
@@ -44,9 +45,11 @@ export default function App() {
 
 
   return (
-    <NavigationContainer onReady={onLayoutRootView}>
-      {isLoggedIn ? <Root/> : <IsLogin/>}
-    </NavigationContainer>
+    <RecoilRoot>
+      <NavigationContainer onReady={onLayoutRootView}>
+        {isLoggedIn ? <Root/> : <IsLogin/>}
+      </NavigationContainer>
+    </RecoilRoot>
   );
 }
 

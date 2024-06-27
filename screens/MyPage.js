@@ -2,21 +2,31 @@ import React, { useState, useEffect } from 'react';
 import { ActivityIndicator, Alert, Platform, StyleSheet, Text } from 'react-native';
 import auth from "@react-native-firebase/auth";
 import storage from '@react-native-firebase/storage';
+import firestore from '@react-native-firebase/firestore';
 import { launchImageLibrary } from 'react-native-image-picker';
 import styled from 'styled-components/native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { BasicColor, ChocolateColor, NomalColor } from '../colors';
 
 import BackgroundUrl from "../assets/coffee/coffeeBackground.png";
+import { useRecoilValue } from 'recoil';
+import { dataCoffee, AllCoffeeData, YesterDayCoffeeCaffeine } from "../Data";
 
 const MyPage = () => {
+
+  const coffeeData = useRecoilValue(dataCoffee);
+  const coffeeAllData = useRecoilValue(AllCoffeeData)
+  const coffeeCaffeineData = useRecoilValue(YesterDayCoffeeCaffeine)
 
   const [imageUri, setImageUri] = useState(null);
   const [userImageUrl, setUserImageUrl] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [more, setMore] = useState(false);
+  const [myCaffeine, setMyCaffeine] = useState(0);
 
   const user = auth().currentUser;
 
+  // 현재 storage 에 저장된 이미지 가져오기
   useEffect(() => {
     if (user) {
       const userImageRef = storage().ref(`avatar/${user.uid}`);
@@ -26,6 +36,11 @@ const MyPage = () => {
     }
   }, [user]);
 
+  useEffect(() => {
+    compareCaffeine();
+  }, [])
+
+  // 이미지 선택하기
   const selectImageFromGallery = async () => {
 
     const options = {
@@ -34,17 +49,13 @@ const MyPage = () => {
     };
 
     launchImageLibrary(options, (response) => {
-      if (response.didCancel) {
-        console.log('Image selection cancelled');
-      } else if (response.errorMessage) {
-        console.error('ImagePicker Error: ', response.errorMessage);
-      } else if (response.assets) {
+      if (response.didCancel) console.log('Image selection cancelled');
+      else if (response.errorMessage) console.error('ImagePicker Error: ', response.errorMessage);
+      else if (response.assets) {
         const asset = response.assets[0];
         setImageUri(asset.uri);
       }
-    }).catch(error => {
-      console.error('Failed to open image picker: ', error);
-    });
+    }).catch(error => { console.error('Failed to open image picker: ', error) });
   };
 
   const uploadImageToFirebase = async () => {
@@ -100,6 +111,19 @@ const MyPage = () => {
     setImageUri(null)
   }
 
+  // 어제 오늘 먹은 카페인 비교하기
+  const compareCaffeine = () => {
+    const todayCaffeine = coffeeData.caffeine
+    const yesterdayCaffeine = coffeeCaffeineData.caffeine
+
+    if(todayCaffeine > yesterdayCaffeine) {
+      setMore(true);
+    }
+
+    const totalCaffeine = Math.abs(todayCaffeine - yesterdayCaffeine);
+    setMyCaffeine(totalCaffeine)
+  }
+
   return (
     <BackgroundContainer source={BackgroundUrl}>
       <Container>
@@ -134,6 +158,31 @@ const MyPage = () => {
         <LogoutButton onPress={Logout}>
           <LogoutText>로그아웃</LogoutText>
         </LogoutButton>
+        
+        <BottomContainer>
+          <TodayKcalBox>
+            <TodayKcalGrayText>오늘 섭취한 카페인</TodayKcalGrayText>
+            <KcalBox>
+              <Text>{coffeeData.caffeine}</Text>
+              <TodayKcalGrayText>&#160;/&#160;400mg</TodayKcalGrayText>
+            </KcalBox>
+            <KcalBox>
+              <Text>어제보다</Text>
+              <TodayKcalChocoText>&#160;&#160;{myCaffeine}mg&#160;&#160;</TodayKcalChocoText>
+              <Text>{more ? "더" : "덜"} 먹었습니다.</Text>
+            </KcalBox>
+          </TodayKcalBox>
+
+          <AllMyCoffeeInforamtionBox>
+            <AllText>전체 커피</AllText>
+            {coffeeAllData.map((item,index) => (
+            <InformationBox key={index}>
+              <InfoDailyText>{item.day}</InfoDailyText>
+              <InfoCupText>총 {item.coffeeCount}잔을 마셨습니다.</InfoCupText>
+            </InformationBox>
+            ))}
+          </AllMyCoffeeInforamtionBox>
+        </BottomContainer>
 
       </Container>
     </BackgroundContainer>
@@ -233,6 +282,65 @@ const ImageSelectBox = styled.View`
   padding: 20px 30px;
   border-radius: 10px;
   background-color: rgba(255, 255, 255, 0.6);
+`
+
+const BottomContainer = styled.ScrollView`
+  margin-top: 20px;
+`
+
+const TodayKcalBox = styled.View`
+  background-color: white;
+  margin: 10px;
+  padding: 15px;
+  border-radius: 10px;
+`
+
+const KcalBox =styled.View`
+  flex-direction: row;
+  align-items: center;
+  margin-top: 10px;
+`
+
+const TodayKcalGrayText = styled.Text`
+  font-size: 12px;
+  color: gray;
+`
+
+const TodayKcalChocoText = styled.Text`
+  color: ${ChocolateColor};
+`
+
+const AllMyCoffeeInforamtionBox = styled.View`
+  margin: 0px 10px;
+  background-color: white;
+  border-radius: 5px;
+`
+
+const AllText = styled.Text`
+  text-align: center;
+  font-weight: bold;
+  font-size: 16px;
+  color: ${BasicColor};
+  padding: 12px;
+`
+
+const InformationBox = styled.View`
+  flex-direction: row;
+  justify-content: space-between;
+  background-color: white;
+  padding: 10px 0px;
+`
+
+const InfoDailyText = styled.Text`
+  font-size: 15px;
+  color: gray;
+  padding-left: 20px;
+`
+
+const InfoCupText = styled.Text`
+  font-size: 14px;
+  font-weight: bold;
+  padding-right: 30px;
 `
 
 const styles = StyleSheet.create({
