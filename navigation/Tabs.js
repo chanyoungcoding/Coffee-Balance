@@ -6,20 +6,26 @@ import Home from "../screens/Home";
 import Search from "../screens/Search";
 import MyPage from "../screens/MyPage";
 import { BasicColor, ChocolateColor, NomalColor, WhiteCoffeeColor } from "../colors";
-import { View } from "react-native";
-import LogoImg from "../components/LogoImg";
+import { Image, View } from "react-native";
 
 const Tab = createBottomTabNavigator();
+
+const LogoImg = () => (
+  <Image
+    source={require('../assets/coffee/removebgCoffee.png')}
+    style={{ width: 60, height: 60 }}
+  />
+);
 
 const Tabs = () => {
   
   return (
-    <View style={{flex: 1, backgroundColor: NomalColor}}>
+    <View style={{flex: 1, backgroundColor: "white"}}>
       <Tab.Navigator screenOptions={{
         headerTitleAlign: 'center',
         headerTitle: () => LogoImg(),
         headerStyle: {
-          backgroundColor: NomalColor,
+          backgroundColor: "white",
           shadowOpacity: 0, 
           borderBottomWidth: 0, 
         },

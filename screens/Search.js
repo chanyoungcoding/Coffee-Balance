@@ -7,6 +7,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { CoffeeInformation }from "../Api/CoffeeName";
 import BackgroundUrl from "../assets/coffee/coffeeBackground.png";
 import { NomalColor } from '../colors';
+import CoffeeSelectBox from '../components/CoffeeSelectBox';
 
 const {width, height} = Dimensions.get("window");
 
@@ -40,14 +41,16 @@ const Search = ({navigation: {navigate}}) => {
         </SearchIcon>
       </SearchBox>
 
-      <View style={{width: width, height: height}}>
+      <View style={{width: width, height: height, backgroundColor: "white"}}>
         <ScrollView>
           {CoffeeInformation.map((item,index) => (
-            <CoffeeInformationBox key={index} onPress={() => onTouchCoffee(item.name)}>
-              <CoffeeImage source={item.image}/>
-              <Text>{item.name}</Text>
-              <MaterialIcons name="arrow-forward-ios" size={12} color="black" />
-            </CoffeeInformationBox>
+            <CoffeeSelectBox 
+              key={index}
+              index={index} 
+              image={item.image} 
+              name={item.name} 
+              onTouchCoffee={onTouchCoffee}
+            />
           ))}
         </ScrollView>
       </View>

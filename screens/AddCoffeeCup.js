@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import firestore from '@react-native-firebase/firestore';
 import styled from 'styled-components/native';
-import { Alert, Button, Text } from 'react-native';
+import { ActivityIndicator, Alert, Button, Text } from 'react-native';
 import auth from '@react-native-firebase/auth';
 
 import { CoffeeInformation } from '../Api/CoffeeName';
@@ -16,6 +16,7 @@ const AddCoffeeCup = ({navigation: {goBack}}) => {
 
   const [coffeeName, setCoffeeName] = useState("");
   const [coffeeCount, setCoffeeCount] = useState(0);
+  const [loading , setLoading] = useState(false);
 
   const onClickCoffee = (name) => {
     setCoffeeName(name);
@@ -37,6 +38,9 @@ const AddCoffeeCup = ({navigation: {goBack}}) => {
     const day = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`; // 오늘 날짜 형식 YYYY-MM-DD
 
     try {
+
+      setLoading(true);
+
       const userDocRef = firestore().collection('users').doc(currentUser.uid);
       const userDoc = await userDocRef.get();
 
@@ -79,6 +83,8 @@ const AddCoffeeCup = ({navigation: {goBack}}) => {
           createdAt: firestore.FieldValue.serverTimestamp(),
         });
       }
+
+      setLoading(false);
 
       Alert.alert('성공적으로 저장되었습니다.');
       goBack();
@@ -128,14 +134,16 @@ const AddCoffeeCup = ({navigation: {goBack}}) => {
       </CoffeeCountBox>
 
       <SelectButton onPress={handleSaveData}>
-        <SelectButtonText>저장</SelectButtonText>
+        <SelectButtonText>{loading ? <ActivityIndicator/> : "저장"}</SelectButtonText>
       </SelectButton>
     </Container>
   );
 };
 
 
-const Container = styled.View``;
+const Container = styled.View`
+  background-color: white;
+`;
 
 const BackgroundContainer = styled.ImageBackground``
 
@@ -199,7 +207,7 @@ const SelectCoffeeLine = styled.View`
 
 const SelectButton = styled.TouchableOpacity`
   width: 100px;
-  margin: 30px auto 0px;
+  margin: 30px auto 50px;
   padding: 10px;
   align-items: center;
   border-radius: 5px;

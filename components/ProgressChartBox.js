@@ -129,24 +129,26 @@ const ProgressChartBox = () => {
   };
 
   const chartConfig = {
-    backgroundGradientFrom: `${NomalColor}`,
-    backgroundGradientTo: `${BasicColor}`,
+    backgroundGradientFrom: NomalColor,
+    backgroundGradientTo: NomalColor,
     color: (opacity = 1) => `rgba(86, 52, 21, ${opacity})`,
   };
 
   return (
     <View>
-      <ProgressChart
-        data={data}
-        width={screenWidth}
-        height={200}
-        strokeWidth={16}
-        radius={32}
-        chartConfig={chartConfig}
-        hideLegend={true}
-      />
+      <View style={styles.chartContainer}>
+        <ProgressChart
+          data={data}
+          width={screenWidth - 30}
+          height={200}
+          strokeWidth={16}
+          radius={32}
+          chartConfig={chartConfig}
+          hideLegend={true}
+        />
+      </View>
 
-      <CoffeeTotalBox>
+      <CoffeeTotalBox style={styles.CoffeeTotalBoxShadow}>
         <Text>커피 개수: {coffeeData.coffeeCount}잔</Text>
         <Text>카페인: {coffeeData.caffeine}mg</Text>
         <Text>칼로리: {coffeeData.calory}kcal</Text>
@@ -171,15 +173,38 @@ const ProgressChartBox = () => {
 };
 
 const CoffeeTotalBox = styled.View`
+  width: 90%;
+  margin: -20px auto;
   flex-direction: row;
   justify-content: space-around;
-  margin: 10px;
-  padding: 10px;
-  background-color: ${BasicColor};
+  padding: 15px 10px;
+  background-color: ${NomalColor};
   border-radius: 5px;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px;
 `;
 
 const styles = StyleSheet.create({
+  chartContainer: {
+    margin: 30,
+    padding: 5, 
+    borderWidth: 2,
+    borderColor: "#F7E9D6",
+    borderRadius: 10, 
+    backgroundColor: "#F7E9D6",
+    shadowColor: '#000', // 그림자 색상
+    shadowOffset: { width: 1, height: 1 },
+    shadowOpacity: 0.5, 
+    shadowRadius: 1, 
+  },
+  CoffeeTotalBoxShadow: {
+    borderColor: "#F7E9D6",
+    borderRadius: 10, 
+    backgroundColor: "#F7E9D6",
+    shadowColor: '#000', // 그림자 색상
+    shadowOffset: { width: .5, height: 1 },
+    shadowOpacity: 0.5, 
+    shadowRadius: 1, 
+  },
   modalContainer: {
     flex: 1,
     justifyContent: 'center',
@@ -199,6 +224,8 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
 });
+
+
 
 export default ProgressChartBox;
 

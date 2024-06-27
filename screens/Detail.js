@@ -6,7 +6,6 @@ import { CoffeeInformation } from '../Api/CoffeeName'
 import CoffeeInfoBox from '../components/CoffeeInfoBox'
 
 import BackImg from "../assets/coffee/coffeeBackground.png";
-import { BasicColor } from '../colors'
 import NotInformation from '../components/Not-Information'
 
 const Detail = ({ route }) => {

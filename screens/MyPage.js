@@ -195,7 +195,6 @@ const BackgroundContainer = styled.ImageBackground`
 
 const Container = styled.View`
   flex: 1;
-  background-size: cover;
 `
 
 const IntroBox = styled.View`
@@ -213,16 +212,18 @@ const UserImg = styled.Image`
   height: 70px;
   background-color: gray;
   border-radius: 100px;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px;
 `
 
 const SelectImageButton = styled.TouchableOpacity`
   margin-top: 20px;
-  background-color: ${ChocolateColor};
+  background-color: white;
   border-radius: 100px;
   padding: 5px;
   position: absolute;
   right: -15px;
   top: 30px;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px;
 `
 
 const ButtonTextBox = styled.View`
@@ -297,7 +298,7 @@ const TodayKcalBox = styled.View`
   margin: 10px;
   padding: 15px;
   border-radius: 10px;
-  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 4px;
 `
 
 const KcalBox =styled.View`
@@ -319,7 +320,7 @@ const AllMyCoffeeInforamtionBox = styled.View`
   margin: 0px 10px;
   background-color: white;
   border-radius: 10px;
-  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 4px;
 `
 
 const AllText = styled.Text`

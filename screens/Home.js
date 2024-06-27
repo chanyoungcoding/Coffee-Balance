@@ -5,8 +5,10 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 import LineChartBox from '../components/LineChartBox';
 import ProgressChartBox from '../components/ProgressChartBox';
+
 import BackgroundUrl from "../assets/coffee/coffeeBackground.png";
-import { ChocolateColor, NomalColor } from '../colors';
+import CoffeeCup from "../assets/coffee/Americano.png";
+import { Image } from 'react-native';
 
 const Home = ({navigation: {navigate}}) => {
   
@@ -16,11 +18,14 @@ const Home = ({navigation: {navigate}}) => {
 
   console.log(`userEmail : ${useremail}, useruid: ${useruid}`)
   return (
-    <BackgroundContainer source={BackgroundUrl}>
+    <BackgroundContainer style={{backgroundColor: "white"}}>
       <Container style={{flex: 1 }}>
 
         <PieContainer>
-          <PieText>오늘 커피 섭취량</PieText>
+          <PieTextBox>
+            <Image source={CoffeeCup} style={{width: 40, height: 40}}/>
+            <PieText>오늘 커피 섭취량</PieText>
+          </PieTextBox>
           <ProgressChartBox/>
         </PieContainer>
 
@@ -47,10 +52,18 @@ const Container = styled.ScrollView``
 const PieContainer = styled.View`
   flex: 1;
   align-items: center;
+  margin-top: 10px;
+`
+
+const PieTextBox = styled.View`
+  flex-direction: row;
+  align-items: center;
 `
 
 const PieText = styled.Text`
-  margin: 15px 0px;
+  margin-top: 10px;
+  font-size: 20px;
+  font-weight: bold;
 `
 
 const AddCoffeeButton = styled.TouchableOpacity`
@@ -64,6 +77,8 @@ const AddCoffeeButton = styled.TouchableOpacity`
 `
 
 const LineContainer = styled(PieContainer)``
-const LineText = styled(PieText)``
+const LineText = styled(PieText)`
+  margin-top: 40px;
+`
 
 export default Home
