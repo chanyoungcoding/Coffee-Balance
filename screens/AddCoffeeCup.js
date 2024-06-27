@@ -5,10 +5,12 @@ import { Alert, Button, Text } from 'react-native';
 import auth from '@react-native-firebase/auth';
 
 import { CoffeeInformation } from '../Api/CoffeeName';
-import { ChocolateColor } from '../colors';
+import { BasicColor, ChocolateColor, NomalColor } from '../colors';
 import { CoffeeCount } from '../Api/CoffeeCount';
 
-const AddCoffeeCup = () => {
+import CoffeeBackground from "../assets/coffee/CoffeeCupBackground.jpg";
+
+const AddCoffeeCup = ({navigation: {goBack}}) => {
 
   const currentUser = auth().currentUser;
 
@@ -78,7 +80,8 @@ const AddCoffeeCup = () => {
         });
       }
 
-      Alert.alert('데이터가 성공적으로 저장되었습니다.');
+      Alert.alert('성공적으로 저장되었습니다.');
+      goBack();
     } catch (error) {
       console.error('Error saving data:', error);
       Alert.alert('데이터 저장 중 오류가 발생했습니다.');
@@ -89,7 +92,16 @@ const AddCoffeeCup = () => {
 
   return (
     <Container>
-      <QuestionCoffee>어떤 종류의 커피를 드셨나요??</QuestionCoffee>
+      <BackgroundContainer source={CoffeeBackground}>
+        <IntroBox>
+          <IntroText>커피는</IntroText>
+          <IntroText>삶의 활력소</IntroText>
+        </IntroBox>
+      </BackgroundContainer>
+
+      <QuestionBox>
+        <QuestionCoffee>어떤 종류의 커피를 드셨나요??</QuestionCoffee>
+      </QuestionBox>
 
       <CoffeeImageSelectBox>
         {CoffeeInformation.map((item, index) => (
@@ -101,7 +113,10 @@ const AddCoffeeCup = () => {
         ))}
       </CoffeeImageSelectBox>
 
-      <QuestionCoffee>몇잔 드셨나요?</QuestionCoffee>
+      <QuestionBox>
+        <QuestionCoffee>몇잔 드셨나요?</QuestionCoffee>
+      </QuestionBox>
+
       <CoffeeCountBox>
         {CoffeeCount.map((item, index) => (
           <CoffeeCountSelect key={index} onPress={() => onClickCoffeeCount(item.count)}>
@@ -112,19 +127,40 @@ const AddCoffeeCup = () => {
         ))}
       </CoffeeCountBox>
 
-      <Button
-        title="데이터 저장"
-        onPress={handleSaveData}
-      />
+      <SelectButton onPress={handleSaveData}>
+        <SelectButtonText>저장</SelectButtonText>
+      </SelectButton>
     </Container>
   );
 };
 
+
 const Container = styled.View``;
+
+const BackgroundContainer = styled.ImageBackground``
+
+const IntroBox = styled.View`
+  background-color: rgba(0,0,0,0.5);
+  padding: 50px 0px;
+`
+
+const IntroText = styled.Text`
+  margin-left: 20px;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+`
+
+const QuestionBox = styled.View`
+  margin: 10px 10px 20px;
+  padding: 10px;
+  background-color: white;
+  border-radius: 15px;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px;
+`
 
 const QuestionCoffee = styled.Text`
   text-align: center;
-  margin: 10px;
   font-size: 20px;
 `;
 
@@ -132,6 +168,10 @@ const CoffeeImageSelectBox = styled.View`
   flex-direction: row;
   justify-content: space-between;
   margin: 5px 10px;
+  padding: 20px 15px;
+  border-radius: 10px;
+  background-color: ${BasicColor};
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px;
 `;
 
 const CoffeeCountBox = styled(CoffeeImageSelectBox)`
@@ -156,5 +196,20 @@ const SelectCoffeeLine = styled.View`
   margin-top: 4px;
   background-color: ${ChocolateColor};
 `;
+
+const SelectButton = styled.TouchableOpacity`
+  width: 100px;
+  margin: 30px auto 0px;
+  padding: 10px;
+  align-items: center;
+  border-radius: 5px;
+  background-color: ${BasicColor};
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+`
+
+const SelectButtonText = styled.Text`
+  color: white;
+  font-weight: bold;
+`
 
 export default AddCoffeeCup;

@@ -158,7 +158,7 @@ const MyPage = () => {
         <LogoutButton onPress={Logout}>
           <LogoutText>로그아웃</LogoutText>
         </LogoutButton>
-        
+
         <BottomContainer>
           <TodayKcalBox>
             <TodayKcalGrayText>오늘 섭취한 카페인</TodayKcalGrayText>
@@ -256,9 +256,11 @@ const UploadButtonText = styled.Text`
 `
 
 const LogoutButton = styled.TouchableOpacity`
+  position: absolute;
+  top: 80px;
+  left: 150px;
   align-items: center;
-  width: 125px;
-  margin: 30px auto;
+  width: 80px;
   padding: 10px;
   background-color: ${BasicColor};
   border-radius: 5px;
@@ -267,6 +269,7 @@ const LogoutButton = styled.TouchableOpacity`
 const LogoutText = styled.Text`
   color: ${NomalColor};
   font-weight: bold;
+  font-size: 12px;
 `
 
 const ImagePreview = styled.Image`
@@ -286,6 +289,7 @@ const ImageSelectBox = styled.View`
 
 const BottomContainer = styled.ScrollView`
   margin-top: 20px;
+  background-color: white;
 `
 
 const TodayKcalBox = styled.View`
@@ -293,6 +297,7 @@ const TodayKcalBox = styled.View`
   margin: 10px;
   padding: 15px;
   border-radius: 10px;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px;
 `
 
 const KcalBox =styled.View`
@@ -313,7 +318,8 @@ const TodayKcalChocoText = styled.Text`
 const AllMyCoffeeInforamtionBox = styled.View`
   margin: 0px 10px;
   background-color: white;
-  border-radius: 5px;
+  border-radius: 10px;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px;
 `
 
 const AllText = styled.Text`

@@ -41,17 +41,19 @@ const CoffeeInfoBox = ({name, calory, suga, protein, sodium, sat_fat, caffeine, 
         <Text>지방 함유량 : {sat_fat}</Text>
       </InformationBox>
       
-      <InformationBox>
+      <InformationLastBox>
         <InfoImg source={ProteinImg}/>
         <Text>프로틴 함유량 : {protein}</Text>
-      </InformationBox>
+      </InformationLastBox>
 
     </Container>
   )
 }
 
 const Container = styled.ScrollView`
-  height: 450px;
+  height: 100%;
+  padding-top: 20px;
+  background-color: white;
 `
 
 const CoffeeName = styled.Text`
@@ -72,6 +74,10 @@ const InformationBox = styled.View`
   justify-content: center;
   align-items: center;
   margin: 10px 0px;
+`
+
+const InformationLastBox = styled(InformationBox)`
+  padding-bottom: 150px;
 `
 
 const InfoImg = styled.Image`

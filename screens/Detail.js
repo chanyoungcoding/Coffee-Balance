@@ -5,24 +5,23 @@ import { CoffeeInfo } from '../Api/CoffeeInfo'
 import { CoffeeInformation } from '../Api/CoffeeName'
 import CoffeeInfoBox from '../components/CoffeeInfoBox'
 
-const Detail = ({ route, navigation: {goBack} }) => {
+import BackImg from "../assets/coffee/coffeeBackground.png";
+import { BasicColor } from '../colors'
+import NotInformation from '../components/Not-Information'
+
+const Detail = ({ route }) => {
 
   const COFFEE_NAME = route.params.coffeeName
   const coffeeInformation = CoffeeInfo.filter(item => item.name.toLowerCase() === COFFEE_NAME.toLowerCase());
   const coffeeImage = CoffeeInformation.filter(item => item.name.toLowerCase() === COFFEE_NAME.toLowerCase());
 
-  if (coffeeInformation.length === 0 || coffeeImage.length === 0) return (
-    <View>
-      <Text>정보가 없습니다.</Text>
-    </View>
-  );
+  if (coffeeInformation.length === 0 || coffeeImage.length === 0) return <NotInformation/>
   return (
     <View>
-      <GoBackButton onPress={() => goBack()}>
-        <Text>goBack</Text>
-      </GoBackButton>
 
-      <CoffeeImage source={coffeeImage[0].image}/>
+      <CoffeeImageBackground source={BackImg}>
+        <CoffeeImage source={coffeeImage[0].image}/>
+      </CoffeeImageBackground>
 
       {coffeeInformation.map((item,index) => (
         <CoffeeInfoBox 
@@ -40,9 +39,7 @@ const Detail = ({ route, navigation: {goBack} }) => {
   )
 }
 
-const GoBackButton = styled.TouchableOpacity`
-
-`
+const CoffeeImageBackground = styled.ImageBackground``
 
 const CoffeeImage = styled.Image`
   width: 50px;

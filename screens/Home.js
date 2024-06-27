@@ -54,12 +54,13 @@ const PieText = styled.Text`
 `
 
 const AddCoffeeButton = styled.TouchableOpacity`
-  background-color: ${ChocolateColor};
-  padding: 10px;
-  border-radius: 10px;
   position: absolute;
-  bottom: 0px;
+  bottom: 10px;
   right: 20px;
+  padding: 10px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px;
 `
 
 const LineContainer = styled(PieContainer)``
