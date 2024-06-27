@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import firestore from '@react-native-firebase/firestore';
 import styled from 'styled-components/native';
-import { ActivityIndicator, Alert, Button, Text } from 'react-native';
+import { ActivityIndicator, Alert, Button, StyleSheet, Text } from 'react-native';
 import auth from '@react-native-firebase/auth';
 
 import { CoffeeInformation } from '../Api/CoffeeName';
@@ -109,7 +109,7 @@ const AddCoffeeCup = ({navigation: {goBack}}) => {
         <QuestionCoffee>어떤 종류의 커피를 드셨나요??</QuestionCoffee>
       </QuestionBox>
 
-      <CoffeeImageSelectBox>
+      <CoffeeImageSelectBox style={styles.CoffeeBoxShadow}>
         {CoffeeInformation.map((item, index) => (
           <CoffeeImageSelect key={index} onPress={() => onClickCoffee(item.name)}>
             <CoffeeImage source={item.image} />
@@ -123,7 +123,7 @@ const AddCoffeeCup = ({navigation: {goBack}}) => {
         <QuestionCoffee>몇잔 드셨나요?</QuestionCoffee>
       </QuestionBox>
 
-      <CoffeeCountBox>
+      <CoffeeCountBox style={styles.CoffeeBoxShadow}>
         {CoffeeCount.map((item, index) => (
           <CoffeeCountSelect key={index} onPress={() => onClickCoffeeCount(item.count)}>
             <CoffeeImage source={item.image} />
@@ -219,5 +219,17 @@ const SelectButtonText = styled.Text`
   color: white;
   font-weight: bold;
 `
+
+const styles = StyleSheet.create({
+  CoffeeBoxShadow: {
+    marginHorizontal: 20,
+    borderColor: "#F7E9D6",
+    borderRadius: 10, 
+    shadowColor: '#000', // 그림자 색상
+    shadowOffset: { width: .5, height: .7 },
+    shadowOpacity: .3, 
+    shadowRadius: .7, 
+  },
+});
 
 export default AddCoffeeCup;

@@ -12,7 +12,7 @@ const NativeStack = createNativeStackNavigator();
 const LogoImg = () => (
   <Image
     source={require('../assets/coffee/removebgCoffee.png')}
-    style={{ width: 60, height: 60 }}
+    style={{ width: 40, height: 40 }}
   />
 );
 

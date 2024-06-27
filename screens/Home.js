@@ -6,9 +6,8 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import LineChartBox from '../components/LineChartBox';
 import ProgressChartBox from '../components/ProgressChartBox';
 
-import BackgroundUrl from "../assets/coffee/coffeeBackground.png";
 import CoffeeCup from "../assets/coffee/Americano.png";
-import { Image } from 'react-native';
+import { Image, StyleSheet } from 'react-native';
 
 const Home = ({navigation: {navigate}}) => {
   
@@ -30,7 +29,9 @@ const Home = ({navigation: {navigate}}) => {
         </PieContainer>
 
         <LineContainer>
-          <LineText>총 커피 섭취 개수</LineText>
+          <LineTextBox style={styles.CoffeeBoxShadow}>
+            <LineText>Total coffee Cup</LineText>
+          </LineTextBox>
           <LineChartBox/>
         </LineContainer>
 
@@ -77,8 +78,29 @@ const AddCoffeeButton = styled.TouchableOpacity`
 `
 
 const LineContainer = styled(PieContainer)``
-const LineText = styled(PieText)`
-  margin-top: 40px;
+
+const LineTextBox = styled.View`
+  margin-top: 20px;
+  border-radius: 10px;
+  background-color: white;
 `
+
+const LineText = styled(PieText)`
+  margin-top: 0;
+  padding: 10px;
+`
+
+const styles = StyleSheet.create({
+  CoffeeBoxShadow: {
+    marginHorizontal: 20,
+    borderColor: "#F7E9D6",
+    borderRadius: 10, 
+    shadowColor: '#000', // 그림자 색상
+    shadowOffset: { width: .5, height: .7 },
+    shadowOpacity: .3, 
+    shadowRadius: .7, 
+  },
+});
+
 
 export default Home

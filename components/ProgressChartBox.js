@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { Dimensions, View, Text, Alert, Modal, Button, StyleSheet } from 'react-native';
+import React, { useEffect, useRef, useState } from 'react';
+import { Dimensions, View, Text, Alert, Modal, Button, StyleSheet, Animated } from 'react-native';
 import { ProgressChart } from 'react-native-chart-kit';
 import firestore from '@react-native-firebase/firestore';
 import auth from "@react-native-firebase/auth";
@@ -19,6 +19,22 @@ const ProgressChartBox = () => {
   const [CaffeineData, setCaffeineData] = useRecoilState(YesterDayCoffeeCaffeine)
 
   const [modalVisible, setModalVisible] = useState(false);
+
+  //애니메이션
+
+  const opacity = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    Animated.spring(opacity, {
+      toValue: 1,
+      useNativeDriver: true
+    }).start();
+  }, [])
+
+  const scale = opacity.interpolate({
+    inputRange: [0, 1],
+    outputRange: [0.7, 1]
+  })
 
     // 어제 날짜 
     const yesterDayBring = () => {
@@ -104,9 +120,6 @@ const ProgressChartBox = () => {
             setCaffeineData({
               caffeine: yesterdayCaffeine
             })
-
-
-
           }
         }
       }, (error) => {
@@ -137,22 +150,26 @@ const ProgressChartBox = () => {
   return (
     <View>
       <View style={styles.chartContainer}>
-        <ProgressChart
-          data={data}
-          width={screenWidth - 30}
-          height={200}
-          strokeWidth={16}
-          radius={32}
-          chartConfig={chartConfig}
-          hideLegend={true}
-        />
+        <ProgressWrapper style={{opacity, transform: [{ scale }]}}>
+          <ProgressChart
+            data={data}
+            width={screenWidth - 30}
+            height={200}
+            strokeWidth={16}
+            radius={32}
+            chartConfig={chartConfig}
+            hideLegend={true}
+          />
+        </ProgressWrapper>
       </View>
 
-      <CoffeeTotalBox style={styles.CoffeeTotalBoxShadow}>
-        <Text>커피 개수: {coffeeData.coffeeCount}잔</Text>
-        <Text>카페인: {coffeeData.caffeine}mg</Text>
-        <Text>칼로리: {coffeeData.calory}kcal</Text>
-      </CoffeeTotalBox>
+      <View style={styles.CoffeeTotalBoxShadow}>
+        <CoffeeTotalBox style={{opacity, transform: [{ scale }]}}>
+          <CoffeeText>커피 개수: {coffeeData.coffeeCount}잔</CoffeeText>
+          <CoffeeText>카페인: {coffeeData.caffeine}mg</CoffeeText>
+          <CoffeeText>칼로리: {coffeeData.calory}kcal</CoffeeText>
+        </CoffeeTotalBox>
+      </View>
 
       {/* 경고 모달 창 */}
       <Modal
@@ -172,16 +189,21 @@ const ProgressChartBox = () => {
   );
 };
 
-const CoffeeTotalBox = styled.View`
+const CoffeeTotalBox = styled(Animated.createAnimatedComponent(View))`
   width: 90%;
-  margin: -20px auto;
+  margin: 0px auto;
   flex-direction: row;
   justify-content: space-around;
   padding: 15px 10px;
   background-color: ${NomalColor};
   border-radius: 5px;
-  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px;
 `;
+
+const ProgressWrapper = styled(Animated.createAnimatedComponent(View))``
+
+const CoffeeText = styled.Text`
+  font-weight: bold;
+`
 
 const styles = StyleSheet.create({
   chartContainer: {
@@ -192,18 +214,18 @@ const styles = StyleSheet.create({
     borderRadius: 10, 
     backgroundColor: "#F7E9D6",
     shadowColor: '#000', // 그림자 색상
-    shadowOffset: { width: 1, height: 1 },
-    shadowOpacity: 0.5, 
-    shadowRadius: 1, 
+    shadowOffset: { width: .5, height: .7 },
+    shadowOpacity: .3, 
+    shadowRadius: .7, 
   },
   CoffeeTotalBoxShadow: {
+    marginHorizontal: 20,
     borderColor: "#F7E9D6",
     borderRadius: 10, 
-    backgroundColor: "#F7E9D6",
     shadowColor: '#000', // 그림자 색상
-    shadowOffset: { width: .5, height: 1 },
-    shadowOpacity: 0.5, 
-    shadowRadius: 1, 
+    shadowOffset: { width: .5, height: .7 },
+    shadowOpacity: .3, 
+    shadowRadius: .7, 
   },
   modalContainer: {
     flex: 1,
