@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import * as SplashScreen from "expo-splash-screen";
 import * as Font from "expo-font";
 import {Ionicons} from "@expo/vector-icons";
@@ -46,9 +47,11 @@ export default function App() {
 
   return (
     <RecoilRoot>
-      <NavigationContainer onReady={onLayoutRootView}>
-        {isLoggedIn ? <Root/> : <IsLogin/>}
-      </NavigationContainer>
+      <GestureHandlerRootView style={{flex: 1}}>
+        <NavigationContainer onReady={onLayoutRootView}>
+          {isLoggedIn ? <Root/> : <IsLogin/>}
+        </NavigationContainer>
+      </GestureHandlerRootView>
     </RecoilRoot>
   );
 }

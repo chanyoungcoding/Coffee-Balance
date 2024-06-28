@@ -142,9 +142,9 @@ const ProgressChartBox = () => {
   };
 
   const chartConfig = {
-    backgroundGradientFrom: NomalColor,
-    backgroundGradientTo: NomalColor,
-    color: (opacity = 1) => `rgba(86, 52, 21, ${opacity})`,
+    backgroundGradientFrom: "white",
+    backgroundGradientTo: "white",
+    color: (opacity = 1) => `rgba(180, 80, 21, ${opacity})`,
   };
 
   return (
@@ -195,7 +195,7 @@ const CoffeeTotalBox = styled(Animated.createAnimatedComponent(View))`
   flex-direction: row;
   justify-content: space-around;
   padding: 15px 10px;
-  background-color: ${NomalColor};
+  background-color: white;
   border-radius: 5px;
 `;
 
@@ -210,9 +210,9 @@ const styles = StyleSheet.create({
     margin: 30,
     padding: 5, 
     borderWidth: 2,
-    borderColor: "#F7E9D6",
+    borderColor: "white",
     borderRadius: 10, 
-    backgroundColor: "#F7E9D6",
+    backgroundColor: "white",
     shadowColor: '#000', // 그림자 색상
     shadowOffset: { width: .5, height: .7 },
     shadowOpacity: .3, 

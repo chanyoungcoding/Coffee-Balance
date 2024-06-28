@@ -2,15 +2,19 @@ import React from 'react'
 import auth from "@react-native-firebase/auth";
 import styled from 'styled-components/native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { Image } from 'react-native';
 
 import LineChartBox from '../components/LineChartBox';
 import ProgressChartBox from '../components/ProgressChartBox';
-
 import CoffeeCup from "../assets/coffee/Americano.png";
-import { Image, StyleSheet } from 'react-native';
+import CoffeeBottomSheet from '../components/CoffeeBottomSheet';
+import SelectCoffeeImage from '../components/SelectCoffeeImage';
+import WeekCoffee from "../components/WeekCoffee";
+
+import {CoffeeInformation} from "../Api/CoffeeNameTwo";
 
 const Home = ({navigation: {navigate}}) => {
-  
+
   const user = auth().currentUser;
   const useremail = user.email
   const useruid = user.uid
@@ -19,6 +23,15 @@ const Home = ({navigation: {navigate}}) => {
   return (
     <BackgroundContainer style={{backgroundColor: "white"}}>
       <Container style={{flex: 1 }}>
+
+        <SelectCoffeeText> 커피 영양소 </SelectCoffeeText>
+        <SelectCoffeeImgBox>
+          {CoffeeInformation.map((item,index) => (
+            <SelectCoffeeImage key={index} image={item.image} name={item.name} koreaName={item.koreaName}/>
+          ))}
+        </SelectCoffeeImgBox>
+
+        <WeekCoffee/>
 
         <PieContainer>
           <PieTextBox>
@@ -29,8 +42,8 @@ const Home = ({navigation: {navigate}}) => {
         </PieContainer>
 
         <LineContainer>
-          <LineTextBox style={styles.CoffeeBoxShadow}>
-            <LineText>Total coffee Cup</LineText>
+          <LineTextBox>
+            <LineText>총 커피 섭취량</LineText>
           </LineTextBox>
           <LineChartBox/>
         </LineContainer>
@@ -49,6 +62,18 @@ const BackgroundContainer = styled.ImageBackground`
 `;
 
 const Container = styled.ScrollView``
+
+const SelectCoffeeImgBox = styled.View`
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 10px 10px;
+`
+
+const SelectCoffeeText = styled.Text`
+  margin: 15px;
+  font-size: 16px;
+  font-weight: bold;
+`
 
 const PieContainer = styled.View`
   flex: 1;
@@ -89,18 +114,5 @@ const LineText = styled(PieText)`
   margin-top: 0;
   padding: 10px;
 `
-
-const styles = StyleSheet.create({
-  CoffeeBoxShadow: {
-    marginHorizontal: 20,
-    borderColor: "#F7E9D6",
-    borderRadius: 10, 
-    shadowColor: '#000', // 그림자 색상
-    shadowOffset: { width: .5, height: .7 },
-    shadowOpacity: .3, 
-    shadowRadius: .7, 
-  },
-});
-
 
 export default Home

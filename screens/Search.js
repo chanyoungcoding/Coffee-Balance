@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components/native';
 import { FontAwesome } from '@expo/vector-icons';
-import { Dimensions, ScrollView, Text, View } from 'react-native';
-import { MaterialIcons } from '@expo/vector-icons';
+import { Dimensions, ScrollView, View } from 'react-native';
 
 import { CoffeeInformation }from "../Api/CoffeeName";
 import BackgroundUrl from "../assets/coffee/coffeeBackground.png";
