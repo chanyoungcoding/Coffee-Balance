@@ -22,3 +22,8 @@
 <br>
 
 ![#9091E9 (3)](https://github.com/chanyoungcoding/Coffee-Balance/assets/95753171/01a9cba5-5ac5-45e7-bcca-be15df5e0acb)
+
+## 🎬 프로젝트 영상
+
+<p>커피 밸런스 영상을 보고싶으면 하단 링크로 이동해 주세요.</p>
+<a href="https://www.youtube.com/watch?v=jNB95cEgpow"> coffee Balance</a>
